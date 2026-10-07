@@ -1,4 +1,4 @@
-import { examData } from "./data_6.js?v=3";
+import { examData } from "./data_6.js";
 import {
   db,
   ref,
@@ -20,7 +20,7 @@ const questionsContainer = document.getElementById("questions-container");
 const questionBoard = document.getElementById("question-board");
 const submitBtn = document.getElementById("submit-btn");
 
-// ===== CHỈ THAY DÒNG NÀY =====
+// ===== CẤU HÌNH ĐỀ 6 =====
 const MA_DE = "HSA_DINHLUONG_DE6";
 const DRAFT_KEY = "examDraft_HSA_DINHLUONG_DE6";
 const EXAM_MINUTES = 75;
@@ -392,56 +392,49 @@ function submitExam() {
     }
   });
 
+  // Hiển thị điểm số lên UI
   const scorePill = document.getElementById("score-pill");
-  document.querySelector(".timer-pill")?.classList.add("hidden");
   if (scorePill) {
     scorePill.classList.remove("hidden");
-    document.getElementById("review-score").innerText = totalScore.toFixed(0);
+    document.getElementById("review-score").innerText = totalScore;
   }
-
-  saveExamResultToFirebase(totalScore, cheatCount);
-  document.getElementById("final-score").innerText = totalScore.toFixed(0);
+  document.getElementById("final-score").innerText = totalScore;
   document.getElementById("cheat-display").innerText = cheatCount;
+
   examScreen.classList.add("hidden");
   resultScreen.classList.remove("hidden");
+
+  // Lưu điểm lên Firebase
+  const session = getMTSeduSession();
+  if (session) {
+    const resultsRef = ref(db, `hsa_results/${MA_DE}/${session.username}`);
+    set(resultsRef, {
+      studentName,
+      studentClass,
+      score: totalScore,
+      cheatCount,
+      answers: userAnswers,
+      timestamp: serverTimestamp(),
+    })
+      .then(() => {
+        const fbStatus = document.getElementById("firebase-status");
+        fbStatus.innerHTML = "✅ Đã lưu điểm lên hệ thống!";
+        fbStatus.style.color = "#16a34a";
+      })
+      .catch((err) => {
+        const fbStatus = document.getElementById("firebase-status");
+        fbStatus.innerHTML =
+          "❌ Lỗi lưu điểm. Vui lòng chụp màn hình báo giáo viên.";
+        fbStatus.style.color = "#dc2626";
+      });
+  }
+
+  // Xoá bản nháp sau khi nộp thành công
   localStorage.removeItem(DRAFT_KEY);
 }
 
-async function saveExamResultToFirebase(tongDiem, soLanThoat) {
-  const statusEl = document.getElementById("firebase-status");
-  if (statusEl) statusEl.innerText = "⏳ Đang đồng bộ kết quả lên MTSedu...";
-  try {
-    const session = getMTSeduSession();
-    const userId = session ? session.id : null;
-    const resultData = {
-      hoTen: studentName,
-      lop: studentClass,
-      maDe: MA_DE,
-      tongDiem,
-      soLanThoat,
-      userId: userId || "unknown",
-      thoiGianNop: new Date().toISOString(),
-      serverTimestamp: serverTimestamp(),
-    };
-    const updates = {};
-    const newResultId = push(ref(db, `testResults/${MA_DE}`)).key;
-    updates[`testResults/${MA_DE}/${newResultId}`] = resultData;
-    if (userId) updates[`users/${userId}/results/${newResultId}`] = resultData;
-    await update(ref(db), updates);
-    if (statusEl) {
-      statusEl.style.color = "green";
-      statusEl.innerText = "✅ Kết quả đã được đồng bộ thành công!";
-    }
-  } catch (error) {
-    if (statusEl) {
-      statusEl.style.color = "red";
-      statusEl.innerText = "❌ Lỗi: " + error.message;
-    }
-  }
-}
-
+// Bắt sự kiện Xem Lại bài làm
 document.getElementById("review-btn").addEventListener("click", () => {
   resultScreen.classList.add("hidden");
   examScreen.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
 });
