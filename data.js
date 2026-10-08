@@ -177,7 +177,7 @@
     options: ["Cung thá»§ D.", "Cung thá»§ B.", "Cung thá»§ C.", "Cung thá»§ A."],
     correctAnswer: 3,
     explanation: "Lá»i giáº£i Ä‘ang cáº­p nháº­t",
-    image: null
+    image: "cau_20.png"
   },
   {
     id: "q21",
@@ -416,7 +416,7 @@
     question: "Má»™t báº£ng xáº¿p háº¡ng Ä‘Ã£ tÃ­nh Ä‘iá»ƒm chuáº©n hoÃ¡ cho chá»‰ sá»‘ nghiÃªn cá»©u khoa há»c cá»§a má»™t sá»‘ trÆ°á»ng Ä‘áº¡i há»c á»Ÿ Viá»‡t Nam vÃ  thu Ä‘Æ°á»£c káº¿t quáº£ sau:\n\n| Äiá»ƒm | DÆ°á»›i 20 | [20;30) | [30;40) | [40;60) | [60;80) | [80;100) |\n|---|---|---|---|---|---|---|\n| Sá»‘ trÆ°á»ng | 7 | 19 | 8 | 5 | 4 | 3 |\n\nNgÆ°á»¡ng Ä‘iá»ƒm tá»‘i thiá»ƒu Ä‘á»ƒ Ä‘Æ°a ra danh sÃ¡ch 25% trÆ°á»ng Ä‘áº¡i há»c cÃ³ chá»‰ sá»‘ nghiÃªn cá»©u tá»‘t nháº¥t Viá»‡t Nam báº±ng bao nhiÃªu?",
     correctAnswer: "42",
     explanation: "Lá»i giáº£i Ä‘ang cáº­p nháº­t",
-    image: null
+    image: "cau_48.png"
   },
   {
     id: "q49",
@@ -435,4 +435,5 @@
     image: null
   }
 ];
+
 
