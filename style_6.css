@@ -38,7 +38,7 @@ body {
   padding: 0 20px;
 }
 
-/* ===== THANH GHIM TRÊN CÙNG ===== */
+/* ===== THANH GHIM TRÊN CÙNG: ĐỒNG HỒ + BẢNG ĐIỀU HƯỚNG ===== */
 .top-sticky {
   position: sticky;
   top: 0;
@@ -312,6 +312,11 @@ body {
 .exam-info-bar .score-pill {
   flex: 0 0 auto;
   white-space: nowrap;
+}
+
+/* thanh thông tin nằm trong .top-sticky nên không cần sticky riêng */
+.exam-info-bar.sticky {
+  position: static;
 }
 
 .timer-pill {
@@ -590,12 +595,14 @@ body {
   .exam-title {
     font-size: 22px;
   }
+
   .container {
     margin: 20px auto;
   }
 }
 
 @media (max-width: 600px) {
+  /* thanh ghim tràn hết chiều ngang màn hình điện thoại */
   #exam-screen .top-sticky {
     margin-left: -20px;
     margin-right: -20px;
@@ -632,7 +639,6 @@ body {
     justify-content: space-around;
   }
 }
-
 .score-pill {
   background-color: #16a34a;
   color: #fff;
@@ -650,6 +656,7 @@ body {
   color: #fff;
 }
 
+
 #toast {
   position: fixed;
   top: 70px;
@@ -664,9 +671,7 @@ body {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   opacity: 0;
   pointer-events: none;
-  transition:
-    opacity 0.25s,
-    transform 0.25s;
+  transition: opacity 0.25s, transform 0.25s;
   z-index: 10000;
 }
 #toast.show {
@@ -674,7 +679,7 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* NÚT "TRANG CHỦ" */
+/* ===== NÚT "TRANG CHỦ": không đè lên thanh ghim ===== */
 body {
   padding-top: 56px;
 }

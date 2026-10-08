@@ -1,22 +1,20 @@
-const SESSION_KEY = "mtsedu_session";
+const SESSION_KEY = 'mtsedu_session';
 
 export function getMTSeduSession() {
   const params = new URLSearchParams(window.location.search);
-  const urlUsername = params.get("mtsedu_user");
-  const urlName = params.get("mtsedu_name");
-  const urlId = params.get("mtsedu_id");
-  const returnUrl = params.get("mtsedu_return");
+  const urlUsername = params.get('mtsedu_user');
+  const urlName = params.get('mtsedu_name');
+  const urlId = params.get('mtsedu_id');
+  const returnUrl = params.get('mtsedu_return');
 
   if (urlUsername) {
     const session = {
       username: urlUsername,
       displayName: urlName || urlUsername,
-      id: urlId || "user_" + urlUsername,
-      returnUrl: returnUrl || "https://mtsedu.vercel.app",
+      id: urlId || ('user_' + urlUsername),
+      returnUrl: returnUrl || 'https://mtsedu.vercel.app'
     };
-    try {
-      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-    } catch {}
+    try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch {}
     return session;
   }
 
@@ -24,36 +22,28 @@ export function getMTSeduSession() {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return null;
     const user = JSON.parse(raw);
-    return user && user.username ? user : null;
-  } catch {
-    return null;
-  }
+    return (user && user.username) ? user : null;
+  } catch { return null; }
 }
 
 export function getReturnUrl() {
   const session = getMTSeduSession();
-  return session && session.returnUrl
-    ? session.returnUrl
-    : "https://mtsedu.vercel.app";
+  return (session && session.returnUrl) ? session.returnUrl : 'https://mtsedu.vercel.app';
 }
 
-export function isLoggedIn() {
-  return getMTSeduSession() !== null;
-}
+export function isLoggedIn() { return getMTSeduSession() !== null; }
 
 export function getStudentName() {
   const s = getMTSeduSession();
-  return s ? s.displayName || s.username : "";
+  return s ? (s.displayName || s.username) : '';
 }
 
 export function clearSession() {
-  try {
-    localStorage.removeItem(SESSION_KEY);
-  } catch {}
+  try { localStorage.removeItem(SESSION_KEY); } catch {}
 }
 
-export function showLoginRequired(container, returnHash = "") {
-  const mtseduUrl = "https://mtsedu.vercel.app/" + returnHash;
+export function showLoginRequired(container, returnHash = '') {
+  const mtseduUrl = 'https://mtsedu.vercel.app/' + returnHash;
   container.innerHTML = `
     <div style="max-width:480px;margin:0 auto;padding:36px;background:white;border-radius:16px;
       box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center;
@@ -74,12 +64,9 @@ export function showLoginRequired(container, returnHash = "") {
 
 export function insertBackButton() {
   const session = getMTSeduSession();
-  const returnUrl =
-    session && session.returnUrl
-      ? session.returnUrl
-      : "https://mtsedu.vercel.app";
-  const btn = document.createElement("div");
-  btn.id = "mtsedu-back-btn";
+  const returnUrl = (session && session.returnUrl) ? session.returnUrl : 'https://mtsedu.vercel.app';
+  const btn = document.createElement('div');
+  btn.id = 'mtsedu-back-btn';
   btn.innerHTML = `
     <a href="${returnUrl}" style="display:inline-flex;align-items:center;gap:8px;
       position:fixed;top:14px;left:14px;z-index:9999;background:rgba(0,0,0,0.85);
