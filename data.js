@@ -224,7 +224,7 @@
     correctAnswer: 1,
     explanation:
       "Kiểm tra sĩ số trung bình mỗi lớp cho từng khối: Khối 7 có 370 học sinh / 8 lớp = 46,25 học sinh/lớp (vượt quá 45). Vậy khối 7 bị thống kê sai. Đáp án đúng là B.",
-    image: null,
+    image: "cau_17.png",
   },
   {
     id: "q18",
@@ -600,3 +600,4 @@
     image: null,
   },
 ];
+
